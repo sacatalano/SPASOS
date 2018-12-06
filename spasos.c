@@ -126,7 +126,7 @@ double min_cont [MAXNODES],max_cont [MAXNODES] ;
 
 int WAT_CHG ;
 int replications = 100 ;
-int nuspecs, nod_t2p [MAXNODES],nod_p2t [MAXNODES], transformations [MAXNODES], transform_rnd [MAXNODES][MAXRANDOM],guich_rnd [MAXNODES][MAXRANDOM],guich_map [MAXNODES]  ; // aca hay que alocar dinamicamente transform
+int nuspecs, nod_t2p [MAXNODES],nod_p2t [MAXNODES], transformations [MAXNODES], transform_rnd [MAXNODES][MAXRANDOM],guich_rnd [MAXNODES][MAXRANDOM],guich_map [MAXNODES]  ; 
 int all_trans [MAXNODES][6],bak_all_trans [MAXNODES][6] ; // last cel= ambig/no ambig
 double penalty  ;
 int penalize = 1, do_resample, do_deca ;
@@ -631,8 +631,8 @@ char * pt_orig, stri[100] ;
    pt_orig = pt_chr ;
    for(i = 0; i<100; i++)
      stri[i] = tolower(pt_chr[i]); 
- //if (  (strstr ( pt_chr,"LM=") != NULL) || (strstr ( pt_chr,"LM3=") != NULL)  )  {  //FLAG        
-   if (  (strstr ( stri,"lm=") != NULL) || (strstr ( stri,"lm3=") != NULL)  )  {  //FLAG
+   
+   if (  (strstr ( stri,"lm=") != NULL) || (strstr ( stri,"lm3=") != NULL)  )  {  
         printf ("\nError! Specimen %i lacks age information(line %i)",guichconf,contlin);
         return (-1); }
    else
@@ -770,7 +770,7 @@ double land_diff ( Punktyp *  pnt1, Punktyp * pnt2 ){
 return (cuatro) ;
 }
 
-void define_limits (int nucateg, int nuspec){ // define los limites de las categorias por especie
+void define_limits (int nucateg, int nuspec){ 
 int lims, i, j   ;
 double span ;
 lims = nucateg + 1   ;
@@ -961,13 +961,13 @@ double dist_start,dist_end, score=0,core=0  ;
                  score = 0 ; guich=0;
                  if (cost_ends){
                      categ= i ;
-                      pts_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la der
+                      pts_sp1 = consense_matrix [sp1][categ].pt ; 
                       categ =  0 ;
-                      pts_sp2 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la der
+                      pts_sp2 = consense_matrix [sp1][categ].pt ; 
                       categ = cat= ( nucateg - 1 ) ;
-                      ptf_sp1 = consense_matrix [ sp1 ][ categ ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la der
+                      ptf_sp1 = consense_matrix [ sp1 ][ categ ].pt ; 
                       categ =  ( nucateg - 1 - i );
-                      ptf_sp2 = consense_matrix [ sp1 ][ categ ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la der
+                      ptf_sp2 = consense_matrix [ sp1 ][ categ ].pt ; 
                       dist_start = pair_conf_dist ( pts_sp1 , pts_sp2 ) ;
                       dist_end   = pair_conf_dist ( ptf_sp1 , ptf_sp2 ) ;
                       score = (dist_start + dist_end) / 2;
@@ -992,7 +992,7 @@ double dist_start,dist_end, score=0,core=0  ;
 return ( score);
 }//make_d_shifts_penalty
 
-void make_stretch (sp1,sp2,nucateg,especies) { //cuando el stretch es negativo se acorta  para la izquierda el desce (queda igual el anc)
+void make_stretch (sp1,sp2,nucateg,especies) { 
 int  i,   dde = 0  , categ,w_besco, cat, move ;
 Punktyp * pt_sp1, * pt_sp2 ;
 double besco,dist_start,dist_end, score   ;
@@ -1000,20 +1000,20 @@ double besco,dist_start,dist_end, score   ;
                   if ( i == 0 ) continue ;
                   translator_str [dde] = i ;
                      categ = 0 ;
-                     pt_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la izq
-                     pt_sp2 = consense_matrix [sp2][categ].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la izq
+                     pt_sp1 = consense_matrix [sp1][categ].pt ;  
+                     pt_sp2 = consense_matrix [sp2][categ].pt ;  
                      dist_start= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                    if (i < 0 )
                     {
                      categ = cat =   ( nucateg- 1 ) + i ;  ;
-                     pt_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la izq
+                     pt_sp1 = consense_matrix [sp1][categ].pt ;  
                      categ =    ( nucateg- 1 ) ;
-                     pt_sp2 = consense_matrix [sp2][categ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la izq
+                     pt_sp2 = consense_matrix [sp2][categ].pt ;  
                      } else {
                       categ = cat= ( nucateg - 1 ) ;
-                      pt_sp1 = consense_matrix [ sp1 ][categ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la der
+                      pt_sp1 = consense_matrix [ sp1 ][categ].pt ;  
                       categ =   ( nucateg - 1 ) - i;
-                      pt_sp2 = consense_matrix [ sp2][categ ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la der
+                      pt_sp2 = consense_matrix [ sp2][categ ].pt ;  
                       }
                    if (i <  0 )
                     move = -i ;
@@ -1124,7 +1124,7 @@ for ( a = 0; a < nuspecs ; a++)
             continue ;}
        besco = 99999999;
 
-       for (i = 0 ; i <  dde   ; i ++ )  // no deberia ir total mas 1 ?
+       for (i = 0 ; i <  dde   ; i ++ )   
           {
            if ( (sank_mtx[a][b].score_str[ i ]  < besco) && (sank_mtx[a][b].score_str[ i ] != -99999) )
             {
@@ -1152,7 +1152,7 @@ pt_conf = datamatrix ;
 pt_sp = sps_list ;
     for (a = 0; a < nuspecs; a++){
         sp1 = a  ;  dde = 0 ;
-        for (i = ( - NUCATEG + 2  ) ; i <  NUCATEG -1  ; i ++ ){// for (i = (-nucateg + 3 ) ; i <  0  ; i ++ )
+        for (i = ( - NUCATEG + 2  ) ; i <  NUCATEG -1  ; i ++ ){ 
           if (i == 0) continue ;
           translator_strinv [ dde ] = i ;
           if (( NUCATEG + i ) <  MINCATS) {
@@ -1161,8 +1161,8 @@ pt_sp = sps_list ;
                dde ++ ;
                continue ; }
           define_limit_stretch (  i , NUCATEG , sp1  ) ;
-           if (sorting_confs_in_cats_stretch ( NUCATEG , nuspecs , nuconfs, sp1 , i ,1 ))  // las pone en las categs de stret de 0 a x . voy a considerar q
-           {                                                                            //se cuentan desde el final de la traject en o de las fciones
+           if (sorting_confs_in_cats_stretch ( NUCATEG , nuspecs , nuconfs, sp1 , i ,1 ))   
+           {                                                                            
             fill_w_consense_stretch (i ,NUCATEG, sp1, invertido,0) ;
             for (b = 0; b < nuspecs; b++)
               {
@@ -1222,7 +1222,7 @@ for ( a = 0; a < nuspecs ; a++)
             continue ;}
        besco = 99999999;
 
-       for (i = 0 ; i <  dde   ; i ++ )// no deberia ser total mas 1 ??
+       for (i = 0 ; i <  dde   ; i ++ ) 
           {
            if ( (sank_mtx[a][b].score_str_inv[ i ]  < besco) && (sank_mtx[a][b].score_str_inv[ i ] != -99999) )
             {
@@ -1258,18 +1258,18 @@ pt_conf = datamatrix ;
 pt_sp = sps_list ;
 
 
- for (i = - ( NUCATEG - 2 ) ; i < ( NUCATEG - 1)  ; i ++ ){ // categoria de inicio aca sp1 es la que modifico.
-   for (j =   - ( NUCATEG - 2 )   ; j < ( NUCATEG - 1)   ; j ++ ){ // categoria de final.
+ for (i = - ( NUCATEG - 2 ) ; i < ( NUCATEG - 1)  ; i ++ ){ 
+   for (j =   - ( NUCATEG - 2 )   ; j < ( NUCATEG - 1)   ; j ++ ){  
          translator_sh_str [0] [dde] = i ;
          translator_sh_str [1] [dde] = j ;
        dde ++ ;}}
 
-       for (sp1 = 0; sp1 < nuspecs; sp1++){ // lup de la especie a modificar
+       for (sp1 = 0; sp1 < nuspecs; sp1++){  
           for (d = 0 ; d < dde ; d++){
               i = translator_sh_str [0][ d ] ;
               j = translator_sh_str [1][ d ] ;
 
-              if ( ( NUCATEG -i + j ) < MINCATS ){  // que no dividamos en menos de 4 toda la categoria
+              if ( ( NUCATEG -i + j ) < MINCATS ){  
                 for (c=  0; c < nuspecs ; c ++ )
                  sank_pt [c][sp1].score_sh_str[d] = -99999 ;
                 continue ; }
@@ -1279,8 +1279,8 @@ pt_sp = sps_list ;
                 continue ; }
               define_limit_db_stretch(i,NUCATEG,sp1,j) ;
            cto = -i + j ;
-           if (sorting_confs_in_cats_stretch ( NUCATEG , nuspecs , nuconfs, sp1 , cto,invertido  ))  // las pone en las categs de stret de 0 a x . voy a considerar q
-           {                                                                            //se cuentan desde el final de la traject en el resto de las fciones
+           if (sorting_confs_in_cats_stretch ( NUCATEG , nuspecs , nuconfs, sp1 , cto,invertido  ))   
+           {                                                                             
             fill_w_consense_stretch (i ,NUCATEG, sp1, invertido,j) ;
             for (sp2 = 0; sp2 < nuspecs; sp2++)
               {
@@ -1377,13 +1377,13 @@ int  span1,span2 ;
 
       if ((i == 0) || (j==0 )  || (j==i))
         return (0) ;
-       //   ACA ME FIJO CUANTAS CATEGS DE LA SP MODIFICADA QUEDAN
+      
        span1 =  NUCATEG - i + j ;
        span2 =  NUCATEG ;
        if ( span1 < MINCATS ) {
           // printf("\n%i/%i RECHAZADO POR una traject muy corta en la sp modificada categs ",i,j) ;
            return (0) ;}
-       // ESTOS SON SOBRE EXTENSION DE UNO SOBRE EL OTRO
+   
        if (  span2 > span1)
         if (span2/span1 >= 3 ){
           return (0) ;}
@@ -1395,30 +1395,30 @@ int  span1,span2 ;
     return (1) ;
 }
 
-void make_stretch_inv (sp1,sp2,nucateg,especies) {// cuando el stretch_inv es negativo se alarga para la izquier.da (mas largo q la ancestral)
+void make_stretch_inv (sp1,sp2,nucateg,especies) { 
 int  i,       dde = 0  , categ,w_besco, cat, move ;
 Punktyp * pt_sp1, * pt_sp2 ;
 double besco,dist_start,dist_end, score  ;
-        // printf("STRETCHS_inv\n") ;
+       
               for (i = - ( nucateg - 2 ) ; i < ( nucateg - 1)  ; i ++ ){
                   if ( i == 0 ) continue ;
                   translator_strinv [dde] = i ;
                   categ = nucateg - 1 ;
-                  pt_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la izq
-                  pt_sp2 = consense_matrix [sp2][categ].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la izq
+                  pt_sp1 = consense_matrix [sp1][categ].pt ; 
+                  pt_sp2 = consense_matrix [sp2][categ].pt ; 
                   dist_end= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                   if (i > 0 )
                     {
                      categ = cat =   i ;  ;
-                     pt_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la izq
+                     pt_sp1 = consense_matrix [sp1][categ].pt ; 
                      categ =    0 ;
-                     pt_sp2 = consense_matrix [sp2][categ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la izq
+                     pt_sp2 = consense_matrix [sp2][categ].pt ; 
                   
                      } else {
                       categ = cat= 0 ;
-                      pt_sp1 = consense_matrix [ sp1][categ ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la der
+                      pt_sp1 = consense_matrix [ sp1][categ ].pt ; 
                       categ =  - i;
-                      pt_sp2 = consense_matrix [ sp2][categ ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la der
+                      pt_sp2 = consense_matrix [ sp2][categ ].pt ; 
                     
                       }
                     if (i <  0 )
@@ -1428,7 +1428,7 @@ double besco,dist_start,dist_end, score  ;
                    dist_start = pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                    score = (dist_start + dist_end )/ 2  ;
                    score = score + penalty + (penalty * ( move - 1) * pen_ext) ;
-                   sank_mtx[sp1][sp2].score_str_inv[ dde ] = score + (penalty * move ) ;// sank_mtx[sp1][sp2].score_str_inv[ dde ] = score + penalty  ;//MORELO
+                   sank_mtx[sp1][sp2].score_str_inv[ dde ] = score + (penalty * move ) ;
                
                    dde ++;
                    }
@@ -1456,18 +1456,18 @@ transo = 0 ;
                      if (i < 0 )
                       {
                        categ_sp1_star = 0 ;
-                       pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la izq
+                       pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; 
                        categ_sp2_star =   ( - i )  ;
-                       pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la izq
+                       pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; 
                     
                        dist_start= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                       }
                        else
                        {
                         categ_sp1_star =   i ;
-                        pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la der
+                        pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; 
                         categ_sp2_star =  0 ;
-                        pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la der
+                        pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; 
                         dist_start= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                      
                        }
@@ -1490,8 +1490,8 @@ transo = 0 ;
                             if (span2/span1 > 4 ) continue ;
                           else
                             if ( span1/span2 > 4 ) continue ;
-                           pt_sp1 = consense_matrix [sp1][categ_sp1_fin].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la izq
-                           pt_sp2 = consense_matrix [sp2][categ_sp2_fin].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la izq
+                           pt_sp1 = consense_matrix [sp1][categ_sp1_fin].pt ; 
+                           pt_sp2 = consense_matrix [sp2][categ_sp2_fin].pt ; 
                            dist_end= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                     
                           }
@@ -1506,8 +1506,8 @@ transo = 0 ;
                             if (span2/span1 > 4 ) continue ;
                            else
                             if ( span1/span2 > 4 ) continue ;
-                           pt_sp1 = consense_matrix [ sp1 ][categ_sp1_fin].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la der
-                           pt_sp2 = consense_matrix [ sp2 ][categ_sp2_fin ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la der
+                           pt_sp1 = consense_matrix [ sp1 ][categ_sp1_fin].pt ; 
+                           pt_sp2 = consense_matrix [ sp2 ][categ_sp2_fin ].pt ; 
                            dist_end= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                        
 
@@ -1557,7 +1557,7 @@ if (jumany_str == 0 )
 }//make_d_rest
 
 
-void make_str_sh (sp1,sp2,nucateg,especies) { //cuando el  es negativo se acorta  para la izquierda el desce (queda igual el anc)
+void make_str_sh (sp1,sp2,nucateg,especies) { 
 int  i,j  ,   dde = 0  , w_besco, cat,move_sh, move_str,categ_sp1_star, categ_sp2_star,categ_sp1_fin, categ_sp2_fin;
 Punktyp * pt_sp1, * pt_sp2 ;
 double besco,dist_start,dist_end, score  ;
@@ -1567,9 +1567,9 @@ double besco,dist_start,dist_end, score  ;
 
                   if ( i == 0 ) continue ;
                       categ_sp1_star =   i ;
-                      pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la der
+                      pt_sp1 = consense_matrix [sp1][categ_sp1_star].pt ; 
                       categ_sp2_star =  0 ;
-                      pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la der
+                      pt_sp2 = consense_matrix [sp2][categ_sp2_star].pt ; 
                       dist_start= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                      if (i <  0 )
                        move_sh = -i ;
@@ -1584,8 +1584,8 @@ double besco,dist_start,dist_end, score  ;
                           categ_sp2_fin =    ( nucateg- 1 ) ;
                           if ( (categ_sp1_fin - categ_sp1_star ) < 2 ) continue ;
                           if ( (categ_sp2_fin - categ_sp2_star) < 2  )  continue ;
-                          pt_sp1 = consense_matrix [sp1][categ_sp1_fin].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la izq
-                          pt_sp2 = consense_matrix [sp2][categ_sp2_fin].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la izq
+                          pt_sp1 = consense_matrix [sp1][categ_sp1_fin].pt ; 
+                          pt_sp2 = consense_matrix [sp2][categ_sp2_fin].pt ; 
                           dist_end= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                            }
                       else{// j > 0
@@ -1593,8 +1593,8 @@ double besco,dist_start,dist_end, score  ;
                            categ_sp2_fin =   ( nucateg - 1 ) - j;
                            if ( (categ_sp1_fin - categ_sp1_star ) < 2 ) continue ;
                            if ( (categ_sp2_fin - categ_sp2_star) < 2  )  continue ;
-                           pt_sp1 = consense_matrix [ sp1 ][categ_sp1_fin].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la der
-                           pt_sp2 = consense_matrix [ sp2 ][categ_sp2_fin ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la der
+                           pt_sp1 = consense_matrix [ sp1 ][categ_sp1_fin].pt ; 
+                           pt_sp2 = consense_matrix [ sp2 ][categ_sp2_fin ].pt ; 
                            dist_end= pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                    
 
@@ -1662,17 +1662,17 @@ int read_data () {
     return (1);
 }// read_data
 
-int read_tmp_data (int allcateg,int asis) { // cuando es recat el tmp_data lee de TNT las configs ancestrales y las en optimus matrix guarda ordenadas como en el alineamiento es decir mantiene las posic.
-                                             // cuando es shift (discreto) lo que hace es guardar todo en una matriz sin dejar espacios para los gaps.
+int read_tmp_data (int allcateg,int asis) { 
+                                             
     int i, a=0 ,l,b ;
      char   buffer_tmp [10000] ;
      if (asis)
-       input_file = fopen ("asis_2pasos.tmp","rb") ; // abre el archivo con las coordenadas ancestrales
+       input_file = fopen ("asis_2pasos.tmp","rb") ;
      else
-       input_file = fopen ("chg_2pasos.tmp","rb") ; // abre el archivo con las coordenadas ancestrales
+       input_file = fopen ("chg_2pasos.tmp","rb") ; 
   for (a = 0 ; a < 199 ; a ++)
      where [a] = 0 ;
-  for (a = 0 ; a < nuspecs ; a ++) // esto lo tengo qeu cambiar para los que son recat !!! xq el numero de categs de los terminales too cambia.
+  for (a = 0 ; a < nuspecs ; a ++) 
    for (b = 0 ; b < NUCATEG ; b ++)
      for (l = 0 ; l < LANDS ; l ++){
         optimus_matrix [a][b].pt[l].x = consense_matrix[a][b].pt[l].x ;
@@ -1708,16 +1708,16 @@ int save_configuration_tnt ( int stage,char * biffer, int asis){
  char    * pt_char ;
  Punktyp * pt ;
 
-for (s= nuspecs; s <  ((2 *nuspecs) -1) ; s++){ // uso t2p xq el orden lo da el archivo q esta leyendo
+for (s= nuspecs; s <  ((2 *nuspecs) -1) ; s++){ 
     nodo = nod_t2p [ s] ;
    read_next_line ( biffer) ;
    if (asis)
-      pt = optimus_matrix [nodo][ stage].pt ;  //ACA TENGO QUE SOLO GUARDAR LAS CATEGORIAS QUE SON LAS DE CADA NODO.
+      pt = optimus_matrix [nodo][ stage].pt ; 
    else
     {
     if (!mask_aln [nodo][stage] )
       continue ;
-    pt = optimus_matrix [nodo][ where[nodo] ].pt ;}  //ACA TENGO QUE SOLO GUARDAR LAS CATEGORIAS QUE SON LAS DE CADA NODO.
+    pt = optimus_matrix [nodo][ where[nodo] ].pt ;}  
     pt_char = biffer  ;
     while (!isspace (* pt_char)  ){
       pt_char ++ ;  }
@@ -1766,7 +1766,7 @@ int save_configuration_tnt_recat ( int stage,char * biffer, int asis){
  char      * pt_char  ;
  Punktyp * pt ;
 
-for (s= nuspecs; s <  ((2 *nuspecs) -1) ; s++){ // uso t2p xq el orden lo da el archivo q esta leyendo
+for (s= nuspecs; s <  ((2 *nuspecs) -1) ; s++){ 
     nodo = nod_t2p [ s] ;
    read_next_line ( biffer) ;
    if (!mask_aln [nodo][stage] )
@@ -1832,7 +1832,7 @@ for (a = 0 ; a < nuspecs-1 ; a ++ ){
   nod_t2p [dos] = uno ;
   nod_p2t [uno] = dos ;
   }
- // nodtrans[dos] = uno ;
+
 }
 
 
@@ -1919,7 +1919,7 @@ void dealloc_sank_mtx () {
 
 
 void alloc_downcosts (  ) {
-int a ;   // ESPECIES PRIMERO ESTADOS DESPUES
+int a ;   
 downcosts = malloc ( nnods * sizeof (double * ) ) ;
 for (a = 0 ; a < nnods ; a ++ )
    downcosts [ a ]  = malloc (  STATES *   sizeof (double    )) ;
@@ -2045,8 +2045,7 @@ int define_dimensions ()
              for(j = 0; j<100; j++)
                 stri[j] = tolower(bafer[j]); 
            if ( ( strstr(stri,"lm=" )!= NULL ) || ( strstr(stri,"lm3=" )!= NULL )  ){
-          //  if ( ( strstr(bafer,"LM=" )!= NULL ) || ( strstr(bafer,"LM3=" )!= NULL )  ){
-                if ( ! paso ){
+               if ( ! paso ){
                   pt_char= strchr (bafer,'=') ;
                   pt_char ++ ;
                   ctos = borrar_espacios(pt_char) ;
@@ -2162,7 +2161,7 @@ if (opt_asis){
            mincosto = costo ; }}
 else{
   for (e = 0 ; e < STATES ; e ++){
-       costo =  sank_mtx[ guichstate ][ e ].best_overall  + downcosts [des][e] ;  //VERRRRRRRRR  costo =  sank_mtx[ e ][ guichstate ].best_overall  + downcosts [des][e] ;
+       costo =  sank_mtx[ guichstate ][ e ].best_overall  + downcosts [des][e] ;  
        if (costo <  mincosto )
            mincosto = costo ; }}
  return (mincosto) ;
@@ -2192,8 +2191,7 @@ for ( n = intnods  ;  n -- ; ){
  for ( n = 0 ; n < nt  ;n ++)
      final_states[n][n] = 1 ;
 
-complete_all_trans (); // esto es xq el lupeo de arriba no incluye terminales
-
+complete_all_trans (); 
 }
 
 
@@ -2202,7 +2200,7 @@ int f,i,nodo,cestro ;
  for (nodo= 0 ; nodo < nt ; nodo ++){
       cestro = ances [nodo ];
       for ( f = 0 ; f < STATES ; f ++)
-         { //lupeo los estado optimos del ancestro
+         { 
           if (final_states [ cestro ] [ f ] != -1)
            {
             mincosto [nodo ] = 99999999 ;
@@ -2238,12 +2236,12 @@ void define_final_states ( nodo ) {
      else
       {
         for ( f = 0 ; f < STATES ; f ++)
-         { //lupeo los estado optimos del ancestro
+         { 
           if (final_states [ cestro ] [ f ] != -1)
            {
             mincosto [nodo ] = 99999999 ;
             for ( e = 0 ; e < STATES ; e ++)
-              { //lupeo todos los estados del nodo en cuestion
+              { 
                if (opt_asis)
                 elcosto   = downcosts[nodo][e] + sank_mtx [ f ] [ e  ].score_asis ;
                else
@@ -2310,7 +2308,7 @@ if ( recons   == NULL)
 for ( n = intnods  ;  n -- ; ){
  nodo = optlist [n] ;
  if (nodo == nt ){
-  for (e = 0 ; e < STATES ; e ++)    //ACA TENGO QUE ELEGIR SIEMPRE EL MISMO Y SER CONSECUENTE EN TODO EL PROGRAMA
+  for (e = 0 ; e < STATES ; e ++)    
     if (final_states [nodo][e] == 1){
        recons[0][ nodo ] = e ; break;}}
   else {
@@ -2356,7 +2354,7 @@ return (score);
 
 void alloc_recons () {
 int a ,c;
-c= 1 ; //ojo aca deje lugar  para pocas recontrucciones.
+c= 1 ; 
 recons =   malloc ( c  *   sizeof(int * )) ;
   for ( a = 0; a < c ; a++ )
       recons [ a ] =  malloc ( nnods *   sizeof(int)) ;
@@ -2481,7 +2479,7 @@ nulan = datamatrix[0].nulands ;
 for (i = 0 ;  i < totcats   ; i ++)
    align_matrix[guichsp][i].pt[0].x = - 10000001 ;
 
-if (!doall)  /* si solo hizo shifts los consensos se llenan aca sin problema es solo mover las categorias sin recalcular los consensos */
+if (!doall) 
  {
   for (j= 0 ;  j <  totcats  ; j ++)
   {
@@ -2492,10 +2490,10 @@ if (!doall)  /* si solo hizo shifts los consensos se llenan aca sin problema es 
       align_matrix[ guichsp ][ j ].pt[ l ].y  =consense_matrix [ guichsp ][ k ].pt [ l ].y ;
       align_matrix[ guichsp ][ j ].pt[ l ].z  =consense_matrix [ guichsp ][ k ].pt [ l ].z ;}}}
   }
-  else   // Si es doall y el tiempo es continuo aca genera un alineamiento.
-    if (timeas) // si hizo shift y stretch pero es no categorical lo corre. No hace alineamiento si es categorical e hizo stretch.
+  else   
+    if (timeas) 
      {
-      define_limits_alignment_cont ( guichsp ); // las categorias dde se incluyen las configs son las totales del alineamiento
+      define_limits_alignment_cont ( guichsp ); 
       sips =sorting_confs_in_cats_alignment ( totcats,  guichsp );
       for (j= 0 ;  j <  totcats  ; j ++)
         {
@@ -2542,7 +2540,7 @@ int my_spawn_hetero( )
     PROCESS_INFORMATION pinfo;
     DWORD how;
     how = 0;
-    strcpy(qqqstr,"tnt ") ; //tiene que ir el nombre del archivo y el del script separado por ;
+    strcpy(qqqstr,"tnt ") ; 
     strcat (qqqstr,outputFilename) ;
     strcat (qqqstr," chg_2tnt.tmp") ;
 
@@ -2619,11 +2617,11 @@ int my_spawn_cont( )
     PROCESS_INFORMATION pinfo;
     DWORD how;
     how = 0;
-    strcpy(qqqstr,"tnt ") ; //tiene que ir el nombre del archivo y el del script separado por ;
+    strcpy(qqqstr,"tnt ") ; 
     strcat (qqqstr,outputFilename) ;
     strcat (qqqstr," ages.tmp") ;
 
-    //strcpy(qqqstr,"tnt Hete_tmp ") ; //tiene que ir el nombre del archivo y el del script separado por ;
+    
    ;
 
     startinfo.cb = sizeof(STARTUPINFO);
@@ -2985,20 +2983,20 @@ for (c= 0 ; c < nnods ; c ++ )
 
 alloc_alignment (cats, nt ) ;
 for (i = 0 ;  i< nt ; i ++)
-  fill_alignment_w_consense_doall (i,cats,0) ;  // para shift y para asis alcanza con trabajar con inf_limit y sup_limit xq solo se corren los consensos no hay q recalcular.
-                                              // para stre solo se puede hacer si los datos son continuos y hay q recalcular los limites de aln.
+  fill_alignment_w_consense_doall (i,cats,0) ;  
+                                             
 calculate_aln_ages  (0 ) ;
 generate_aln_file (cats,which_cng) ;
 
 
 
    generate_tmp_file_hetero() ;
-    my_spawn_hetero (   ); // largo tnt para que genere los tmps
+    my_spawn_hetero (   ); 
     input_file = fopen ("trans.tmp","rb") ;
     generate_nodtrans () ;
     if ( dosvg )
       generate_d_svg(cats,0);
-    fclose (input_file) ;// lee el tmp para traducir los nodos
+    fclose (input_file) ;
     if (!read_tmp_data ( cats,0  )){
       printf("\nLa cagamos Carlos");
 
@@ -3181,7 +3179,7 @@ void generate_alignment_pair (int nodo, int alcat) {
 int ces,categs=0,l,c,i,nodp,cesp,shif_ces,shif_nod ;
 Punktyp * pt_des , * pt_ces ;
 
-nodp = nod_t2p [ nodo ] ; // el usuario pide el numero de nodo de TNT e internamente tengo que traducirlo a mi numeracion
+nodp = nod_t2p [ nodo ] ; 
 cesp = ances   [ nodp ] ;
 ces =  nod_p2t [cesp]   ;
 
@@ -3248,8 +3246,8 @@ void generate_alignment_pair_reca (int nodo, int alcat) {
 
 int ces,categs=0,l,c,i, nodp,cesp  ;
 Punktyp * pt_des , * pt_ces;
-//bandera
-nodp = nod_t2p [ nodo ] ; // el usuario pide el numero de nodo de TNT e internamente tengo que traducirlo a mi numeracion
+
+nodp = nod_t2p [ nodo ] ; 
 cesp = ances [ nodp ] ;
 ces = nod_p2t [cesp] ;
 
@@ -3419,20 +3417,20 @@ double dist_start,dist_end, score=0  ;
 
                    if (cost_ends){
                       categ =   0 ;
-                      pt_sp1 = consense_matrix [sp1][ categ ].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la der
-                      pt_sp2 = consense_matrix [ sp2 ][categ].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la der
+                      pt_sp1 = consense_matrix [sp1][ categ ].pt ; 
+                      pt_sp2 = consense_matrix [ sp2 ][categ].pt ; 
                       dist_start = pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                       categ = cat =   ( nucateg-1);
-                      pt_sp1 = consense_matrix [sp1][categ].pt ; //define q celda de la sp 1 en final cdo corro sp2 a la izq
-                      pt_sp2 = consense_matrix [sp2][categ].pt ; //define q celda de la sp 2 en final cdo corro sp2 a la izq
+                      pt_sp1 = consense_matrix [sp1][categ].pt ; 
+                      pt_sp2 = consense_matrix [sp2][categ].pt ; 
                       dist_end = pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                       score = dist_start + dist_end ;
                       div= 2 ;
                    }else
                    {
                     for (a = 0 ; a < nucateg ; a ++){
-                      pt_sp1 = consense_matrix [ sp1 ] [ a ].pt ; //define q celda de la sp 1 en comiezo cdo corro sp2 a la der
-                      pt_sp2 = consense_matrix [ sp2 ] [ a ].pt ; //define q celda de la sp 2 en comiezo cdo corro sp2 a la der
+                      pt_sp1 = consense_matrix [ sp1 ] [ a ].pt ; 
+                      pt_sp2 = consense_matrix [ sp2 ] [ a ].pt ; 
                       dist_start = pair_conf_dist ( pt_sp1 , pt_sp2 ) ;
                       score += dist_start ;
                       div= nucateg; }}
@@ -3451,9 +3449,10 @@ for( a = 0 ; a < nuspecs  ;a ++ ){
       tot= score  + tot ;
        if( score < minscore)
          minscore = score ;}
-        tot = tot /nuspecs;
- penalty = tot / 13 ; 
- penalty = penalty  * (  pen_fac  );
+tot = tot /nuspecs;
+penalty = tot  ;
+penalty = penalty /nucateg  ;        
+penalty = penalty  * (  pen_fac  );
  }
 
 
@@ -3513,19 +3512,19 @@ for( a = 0 ; a < nuspecs  ;a ++ ){
    for (c= 0; c< nupoints ; c++) {
 
         if (DIMS == 2 ) {
-         dofermatpoint_2d (*Left,*Right,*Ces,&medio) ; //ahi deberia modificarse el punto medio veremos....
+         dofermatpoint_2d (*Left,*Right,*Ces,&medio) ;  
          dis_Izq=   sqrt (  (  pow ((Left->x -  medio.x),2)  + pow ( (Left->y  - medio.y),2 )  ) ) ;
          dis_Der=   sqrt (  (  pow ((Right->x - medio.x),2)  + pow ( (Right->y - medio.y),2 )  ) ) ;
          dis_Anc=   sqrt (  (  pow ((Ces->x -   medio.x),2)  + pow ( (Ces->y   - medio.y),2 )  ) ) ;
         }
         else
         {
-         dofermatpoint_3d (*Left,*Right,*Ces,&medio) ; //ahi deberia modificarse el punto medio veremos...
+         dofermatpoint_3d (*Left,*Right,*Ces,&medio) ; 
          dis_Izq=   sqrt (  (  pow ((Left->x -  medio.x),2)  + pow ( (Left->y  - medio.y),2 ) + pow ( (Left->z  - medio.z),2 ) ) ) ;
          dis_Der=   sqrt (  (  pow ((Right->x - medio.x),2)  + pow ( (Right->y - medio.y),2 ) + pow ( (Right->z - medio.z),2 ) ) ) ;
          dis_Anc=   sqrt (  (  pow ((Ces->x -   medio.x),2)  + pow ( (Ces->y   - medio.y),2 ) + pow ( (Ces->z   - medio.z),2 ) ) ) ;
         }
-        if ( menage == 9 ) { // esto es para armar los estados de fx extendido
+        if ( menage == 9 ) { // For extended FS
           consense_matrix [ dde_cns_mtx ][stage].pt[c].x = medio.x ;
           consense_matrix [ dde_cns_mtx ][stage].pt[c].y = medio.y ;
           if (DIMS == 3 )
@@ -3590,21 +3589,20 @@ if ( Izq.x < ANY_POINT || Der.x < ANY_POINT ) {
  Lado_IA = Distanciero_2d ( X_Anc, Y_Anc, X_Izq, Y_Izq) ;
  Lado_DA = Distanciero_2d ( X_Anc, Y_Anc, X_Der, Y_Der) ;
 
-//PASO 1.0: Hay dos puntos con la mismas coordenadas?
+
 if ((Y_Izq==Y_Der) && (X_Izq==X_Der))
-   { X_Nod=X_Izq ; Y_Nod=Y_Izq ;//printf ("\n Pto Fermat es el punto Der=Izq\n") ;
+   { X_Nod=X_Izq ; Y_Nod=Y_Izq ; 
    listo = listo +1 ; }
 
 if ((Y_Izq==Y_Anc) && (X_Izq==X_Anc))
-   { X_Nod=X_Izq ; Y_Nod=Y_Izq ; //printf ("\n Pto Fermat es el punto Anc=Izq\n") ;
+   { X_Nod=X_Izq ; Y_Nod=Y_Izq ;  
     listo = listo +1 ; }
 
 if ((Y_Der==Y_Anc) && (X_Der==X_Anc))
-    { X_Nod=X_Der ; Y_Nod=Y_Der; //printf ("\n Pto Fermat es el punto Anc=Der\n") ;
+    { X_Nod=X_Der ; Y_Nod=Y_Der;  
    listo = listo +1 ; }
 
-//PASO 1.1: Hay un angulo de 120 o mas grados? Esto lo resuelvo usando el teorema del coseno
-//  cos A =  ( b^2 + c^2-a^2 ) / 2bc
+
  suma = ( (Lado_ID *  Lado_ID)  + (Lado_IA * Lado_IA) - (Lado_DA * Lado_DA) ) / (2*Lado_IA*Lado_ID) ;
  if ( suma > 1 ) suma = 1 ;
  if ( suma < -1 ) suma = 1 ;
@@ -3640,8 +3638,7 @@ Pendiente_ID =  ((Y_Izq - Y_Der) / (X_Izq - X_Der)) ;
 Pendiente_IA =  ((Y_Izq - Y_Anc) / (X_Izq - X_Anc)) ;
 Pendiente_DA =  ((Y_Der - Y_Anc) / (X_Der - X_Anc)) ;
 
-//PASO 1.2. Me fijo que nodo es el que esta mas a la izquierda y a ese sera el 1. El 2 sera aquel en que termine el lados superior y
-//el tres ser?aquel en que termine el lado inferior.
+ 
 
 if (listo<1)
 {
@@ -3754,28 +3751,26 @@ if (listo<1)
 
     }
 
-//PASO 2.1.1: Calculo el Vertice del triangulo equilatero correspondiente al lado 1-2.
 
-ang_sis = atan ( (Y_2 - Y_1 ) / (X_2 - X_1 ) ) ;//calculo del angulo entre el lado y el sist de referencia
+
+ang_sis = atan ( (Y_2 - Y_1 ) / (X_2 - X_1 ) ) ;
 vert_X_Eq = X_1 + (cos (ang_sis) * 0.5 * Lado_12 ) - cos (( PI * 0.5) - ang_sis) * Lado_12 * cos (0.5235987756) ;
 vert_Y_Eq = Y_1 + (sin (ang_sis) * 0.5 * Lado_12 ) + sin (( PI * 0.5)  - ang_sis) * Lado_12 * cos (0.5235987756) ;
 
 
 
-//PASO 2.1.2: Calculo de la funcion de la recta
  Pen_12 = ((Y_3 - vert_Y_Eq ) / (X_3 - vert_X_Eq) ) ;
  Ord_12 = (  vert_Y_Eq - (Pen_12 * vert_X_Eq)   ) ;
 
-//PASO 2.2.1: Calculo el Vertice del triangulo correspondiente al lado 1-3.
 ang_sis = atan ( (Y_3 - Y_1 ) / (X_3 - X_1 ) ) ;
 vert_X_Eq = X_1 + (cos (ang_sis) * 0.5 * Lado_13 ) + cos (( PI * 0.5) - ang_sis) * Lado_13 * cos (0.5235987756) ;
 vert_Y_Eq = Y_1 + (sin (ang_sis) * 0.5 * Lado_13 ) - sin (( PI * 0.5) - ang_sis) * Lado_13 * cos (0.5235987756) ;
 
-//PASO 2.2.2: Calculo de la funcion de la otra recta
+
  Pen_13 = ((Y_2 - vert_Y_Eq ) / (X_2 - vert_X_Eq) ) ;
  Ord_13 = (  vert_Y_Eq - (Pen_13 * vert_X_Eq)   ) ;
 
-//PASO 3.1.: SOLUCION DEL SISTEMA DE DOS ECUACIONES
+
   X_Nod = ( Ord_12 - Ord_13 ) / (Pen_13 - Pen_12 ) ;
   Y_Nod = X_Nod *  Pen_12 + Ord_12 ;
 
@@ -3906,7 +3901,7 @@ Lado_IA = Distanciero_3d ( X_Anc, Y_Anc, Z_Anc, X_Izq, Y_Izq, Z_Izq) ;
 Lado_DA = Distanciero_3d ( X_Anc, Y_Anc, Z_Anc, X_Der, Y_Der, Z_Der) ;
 
 
-//PASO 1.0: Hay dos puntos con la mismas coordenadas?
+
 if ((Y_Izq==Y_Der) && (X_Izq==X_Der) && (Z_Izq==Z_Der) )
    { X_Nod=X_Izq ; Y_Nod=Y_Izq ; Z_Nod = Z_Izq ;
    listo = 1 ; }
@@ -3919,8 +3914,7 @@ if ((Y_Der==Y_Anc) && (X_Der==X_Anc) && (Z_Der==Z_Anc) )
     { X_Nod=X_Der ; Y_Nod=Y_Der; Z_Nod = Z_Der ;
       listo = 1 ; }
 
-//PASO 1.1: Hay un angulo de 120 o mas grados? Esto lo resuelvo usando el teorema del coseno
-//  cos A =  ( b^2 + c^2-a^2 ) / 2bc
+
 if ( listo < 1 ) {
  tmp = ( (Lado_ID *  Lado_ID)  + (Lado_IA * Lado_IA) - (Lado_DA * Lado_DA) ) / (2*Lado_IA*Lado_ID) ;
  if ( tmp > 1 ) tmp = 1 ;
@@ -3964,12 +3958,10 @@ if (listo < 1)
     Y_3 = 0 ;
     Lado_12 = Lado_ID ;
     Lado_13 = Lado_IA ;
-   // printf ("entro en angulo menor que 90\n") ;
     }
  else
     {
-   //  printf ("entro en angulo mayor que 90\n") ;
-    X_1= 0;
+       X_1= 0;
     Y_1 =0 ;
     X_2 = Lado_DA * cos (angulo_Der) ;
     Y_2 = Lado_DA * sin (angulo_Der) ;
@@ -3981,7 +3973,6 @@ if (listo < 1)
     Lado_13 = Lado_ID ;
     rotado = 1 ;
     }
-//calculo del angulo entre el lado y el sist de referencia
  ang_sis = atan ( (Y_2 - Y_1 ) / (X_2 - X_1 ) ) ;
 
 
@@ -3990,20 +3981,20 @@ if (listo < 1)
 
 
 
-//PASO 2.1.2: Calculo de la funcion de la recta
+
  Pen_12 = ((Y_3 - vert_Y_Eq ) / (X_3 - vert_X_Eq) ) ;
  Ord_12 = (  vert_Y_Eq - (Pen_12 * vert_X_Eq)   ) ;
 
-//PASO 2.2.1: Calculo el Vertice del triangulo correspondiente al lado 1-3.
+
 ang_sis = atan ( (Y_3 - Y_1 ) / (X_3 - X_1 ) ) ;
 vert_X_Eq = X_1 + (cos (ang_sis) * 0.5 * Lado_13 ) + cos ((PI * 0.5) - ang_sis) * Lado_13 * cos (0.5235987756) ;
 vert_Y_Eq = Y_1 + (sin (ang_sis) * 0.5 * Lado_13 ) - sin ((PI * 0.5) - ang_sis) * Lado_13 * cos (0.5235987756) ;
 
-//PASO 2.2.2: Calculo de la funcion de la otra recta
+
  Pen_13 = ((Y_2 - vert_Y_Eq ) / (X_2 - vert_X_Eq) ) ;
  Ord_13 = (  vert_Y_Eq - (Pen_13 * vert_X_Eq)   ) ;
 
-//PASO 3.1.: SOLUCION DEL SISTEMA DE DOS ECUACIONES
+
 
   X_No = ( Ord_12 - Ord_13 ) / (Pen_13 - Pen_12 ) ;
   Y_No = X_No *  Pen_12 + Ord_12 ;
@@ -4013,36 +4004,36 @@ vert_Y_Eq = Y_1 + (sin (ang_sis) * 0.5 * Lado_13 ) - sin ((PI * 0.5) - ang_sis) 
 //printf ("pen13:%f \n", Pen_13) ;
 
 
-//voy a calcular la distancia entre Des y el punto donde corta el lado AD la recta del pto de fermat
+
  Pen_12 = (Y_No / X_No)  ; //printf ("pen12:%f \n", Pen_12) ;
  Ord_12 = 0 ;
 
 
 Cte_prop =  (X_3 - X_2 )  ;
-    //printf ("\Cte_prop %f \n", Cte_prop) ;
+  
 
  if ( ( (X_3 - X_2 )  < 0.000000001) && ( (X_3 - X_2 )  > - 0.000000001) )
   {
       Dist23F = Y_2 - Y_No ;
       X_23 = X_3 ;
       Y_23 = Pen_12 *  X_23 ;
-     // printf ("\entro Dist23F %f Y_23 %f X_23 %f \n",Dist23F, Y_23 , X_23  ) ;
+     
   }
  else
   {
- Pen_13 = (Y_3 - Y_2 ) / (X_3 - X_2) ;  //printf ("\n pen13:%f \n", Pen_13) ;
- Ord_13 = Y_2 - (Pen_13 * X_2) ;    //  printf ("\n ord:%f \n", Ord_13) ;
- X_23 = ( Ord_12 - Ord_13 ) / (Pen_13 - Pen_12 ) ; //printf ("\n X_23 :%f \n", X_23 ) ;
- Y_23 =  X_23 *  Pen_12 + Ord_12 ;               ; //printf ("\n Y_23 :%f \n", Y_23 ) ;
- Dist23F= Distanciero_3d (X_2, Y_2 ,0 , X_23, Y_23, 0 ) ;  //printf ("\n  Dist23F :%f \n",  Dist23F ) ;
+ Pen_13 = (Y_3 - Y_2 ) / (X_3 - X_2) ;  
+ Ord_13 = Y_2 - (Pen_13 * X_2) ;    
+ X_23 = ( Ord_12 - Ord_13 ) / (Pen_13 - Pen_12 ) ;
+ Y_23 =  X_23 *  Pen_12 + Ord_12 ;               ; 
+ Dist23F= Distanciero_3d (X_2, Y_2 ,0 , X_23, Y_23, 0 ) ;  
   }
 
 
-//voy a calcular la distancia entre Ñ y Fermat sobre la recta anterior.
+
 
 DistF= Distanciero_3d (X_No, Y_No ,0 ,0 , 0, 0 ) ; //printf ("\n  DistF :%f \n",  DistF ) ;
 
-//voy a calcular la distancia entre Izq y Ñ
+
 
 DistI23= Distanciero_3d (X_23, Y_23 ,0 ,0 , 0, 0 ) ; //printf ("\n  DistI23 :%f \n",  DistI23 ) ;
 //printf ("\n Lado_DA :%f \n",  Lado_DA ) ;
@@ -4068,7 +4059,7 @@ else
 
 Cte_prop =  1- ((DistI23 - DistF) / DistI23 );
 
-if (X_Izq > X )  // las distancias estan mediddas desde Izq
+if (X_Izq > X )  
  X_Nod = X_Izq - (X_Izq - X) * Cte_prop ;
 else
  X_Nod = X_Izq + (X - X_Izq  ) * Cte_prop ;
@@ -4106,11 +4097,11 @@ else
 Cte_prop =  1- ((DistI23 - DistF) / DistI23 );
 
 
-if (X_Der > X )  // las distancias estan mediddas desde Der
+if (X_Der > X ) 
  X_Nod = X_Der - (X_Der - X) * Cte_prop ;
 else
  X_Nod = X_Der + (X - X_Der  ) * Cte_prop ;
-//printf ("\naca X_Der %f, X %f, X_Nod %f", X_Der, X, X_Nod) ;
+
 if (Y_Der > Y  )
  Y_Nod = Y_Der - ( Y_Der - Y ) * Cte_prop ;
 else
@@ -4137,7 +4128,7 @@ if ( X_Nod > 10000000 || X_Nod < -10000000 || Y_Nod > 10000000 || Y_Nod < -10000
   j = 0 ;
   while ( 1 ) {
     Cte_prop = 0.0000001 ;
-    X_2 = X_3 ;  // X_2 = CURSUM ;
+    X_2 = X_3 ;  
     SLIDE_POINT( middle -> x , Der.x , Izq.x , Anc.x ) ;
     SLIDE_POINT( middle -> y , Der.y , Izq.y , Anc.y ) ;
     SLIDE_POINT( middle -> z , Der.z , Izq.z , Anc.z ) ;
@@ -4244,8 +4235,7 @@ move =  0 ;
            pt_sp1 = consense_matrix [sp1][j].pt ;
            pt_sp2 = consense_matrix [sp2][j].pt ;
            pt_sp3 = consense_matrix [sp3][guich].pt ;
-          // printf("\narriba besti=%i , j=%i , guich=%i",besti,j,guich);
-           score= escor_fermat (pt_sp1,pt_sp2,pt_sp3,j,9); }
+          score= escor_fermat (pt_sp1,pt_sp2,pt_sp3,j,9); }
         else{
           pt_sp1 = consense_matrix [sp1][j].pt ;
           cpy_one (sp1,j) ; }
@@ -4261,7 +4251,6 @@ move =  0 ;
            pt_sp1 = consense_matrix [sp1][j].pt ;
            pt_sp2 = consense_matrix [sp2][j].pt ;
            pt_sp3 = consense_matrix [sp3][guich].pt ;
-          // printf("\nabajo besti=%i , j=%i , guich=%i",besti,j,guich);
            guich++ ;
            score= escor_fermat (pt_sp1,pt_sp2,pt_sp3,j,9);} } }
 
@@ -4351,7 +4340,6 @@ int correct_triangle_inequality (  ) {
       {
         for (c = b +1 ; c < STATES ; c ++ )
         {
-         // printf("%i,%i,%i-",a,b,c);
           disA = sank_mtx[a][b].best_overall ;
           disB = sank_mtx[b][c].best_overall ;
           disC = sank_mtx[a][c].best_overall ;
@@ -4412,7 +4400,7 @@ double tmp_score (int sp1,int internal,int move,int cual){
 int  c, l,stg_star_m, guich, j,stg_fin_m,i;
 double score=0, totscore = 0, esco =0  ;
 Punktyp * pts_sp1, * pts_sp2 ;
-    if ( move < 0 ) { // si en la rama hay un shift negativo
+    if ( move < 0 ) { // if there is a negative shift 
              i =  move ;
              stg_star_m = -i ;stg_fin_m = NUCATEG + i  ;
               for (j = 0 ; j <  NUCATEG; j++)
@@ -4432,14 +4420,14 @@ Punktyp * pts_sp1, * pts_sp2 ;
             score = score + ( penalty * l) ;
            }
         else
-         if (  move == 0 ){ // si no hay shift en la rama
+         if (  move == 0 ){ // if there is no shift
           for ( c = 0  ; c < NUCATEG ; c ++){
             pts_sp1 = buff_traj[cual][c].pt ;
             pts_sp2 = optimus_matrix [sp1] [c].pt ;
             score+= pair_conf_dist (pts_sp1,pts_sp2);}
             score = score / NUCATEG;
          }
-          else{ //si hay shift positivo en la rama
+          else{ //if there is a possitive shift
               stg_star_m = move ;  guich= 0 ; score=0;
               for (j = 0 ; j <  NUCATEG; j++)
                 {
@@ -4477,7 +4465,7 @@ for ( n = 0 ; n < intnods ; n ++){
             score+= pair_conf_dist (pts_sp1,pts_sp2);}
             score = score / NUCATEG;}
      else{
-       if ( ( position[des] - position[anc] ) < 0 ) { // si en la rama hay un shift negativo
+       if ( ( position[des] - position[anc] ) < 0 ) { // if there is a negative shift
              i =  position[des] - position[anc] ;
              stg_star_m = -i ;stg_fin_m = NUCATEG + i  ;
               for (j = 0 ; j <  NUCATEG; j++)
@@ -4497,7 +4485,7 @@ for ( n = 0 ; n < intnods ; n ++){
 
            }
         else
-         if ( ( position[des] - position[anc] ) == 0 ){ // si no hay shift en la rama
+         if ( ( position[des] - position[anc] ) == 0 ){ // if there is no shift
           for ( c = 0  ; c < NUCATEG ; c ++){
             pts_sp1 = optimus_matrix [anc][c].pt ;
             pts_sp2 = optimus_matrix [des] [c].pt ;
@@ -4505,7 +4493,7 @@ for ( n = 0 ; n < intnods ; n ++){
             score = score / NUCATEG;
 
            }
-          else{ //si hay shift positivo en la rama
+          else{ // if there is a possitive shift
               guich= 0 ; score=0;
               stg_star_m = position[des] - position[anc] ;
               for (j = 0 ; j <  NUCATEG; j++)
@@ -4725,7 +4713,7 @@ for (a=0 ; a < nnods; a++ )
  for (c=0 ; c < nuteg  ; c++ )
  {
    son = sup_limit_cont[a] - inf_limit_cont [a]  ;
-   pace = (max_cont[a] - min_cont[a])  / (son - 1 ) ; //min_cont y max_cont son leidos de la optimizacion de tnt. TNT lee de los terminales el promedio de age para todos los individuos de la categoria final e inicial
+   pace = (max_cont[a] - min_cont[a])  / (son - 1 ) ; 
 
    if (mask_aln[a][c] == 1 )
    {i = 0 ;
@@ -4983,7 +4971,7 @@ my_spawn_asis  (   ) ;
 //remove ( asisFilename );
 input_file = fopen ("trans.tmp","rb") ;
 generate_nodtrans () ;
-fclose (input_file) ;// lee el tmp para traducir los nodos
+fclose (input_file) ;// read tmp file to translate node number
 if (!read_tmp_data ( NUCATEG,1  )){
     printf("\nLa cagamos Carlos");
 
@@ -4995,10 +4983,9 @@ remove ("trans.tmp");
 
 
 
-/* showachange sirve para ver el cambio entre dos nodos pueden ser terminales o nodos internos solo que tiene q ser solo con !doall */
-//showachange (ances,desce,stg_asis,stg_ancH,stg_desH,1) ; // aca imprime en el archivo las configs optimizadas desde TNT como asis
+
 if (!doal)
- scor_AS_TNT = score_by_branch (1 ) ; // uno quiere decir que usa as is
+ scor_AS_TNT = score_by_branch (1 ) ; // 1 is as is 
 fclose (input_file) ;
 generate_tps_asis () ;
 core = 0 ;
@@ -5025,14 +5012,14 @@ double  newscore;
    scor_H_FS= sank_downpass () ;
    sank_uppass () ;
    newscore= fill_reconstructions_new (nt) ;}
- map_changes (0,0) ; // aca agrega a branch_labels las tranformaciones q obtiene de transformations
+ map_changes (0,0) ; // add transformations to branch_labels
 
-   // va a hacer alineamientos en todos los casos excepto que sea discreto e infiera stretchs.
+   // will do alignemnts except if if discrete and stretches were inferred.
   WAT_CHG = r_stretchs (0 ) ;
  if (  WAT_CHG == 0  )  // si no hay mov  sean como sean los datos
-       cat_alin = generate_alignment_shift ( 0,NUCATEG,nuspecs,WAT_CHG,timeas ) ; //en generate alignment new y generate_alignment_asis se generan archivos para q los lea TNT
+       cat_alin = generate_alignment_shift ( 0,NUCATEG,nuspecs,WAT_CHG,timeas ) ; 
  else if ( WAT_CHG  == 1  ) // si hay solo shift sean como sean los datos
-    cat_alin = generate_alignment_shift ( 0,NUCATEG,nuspecs,WAT_CHG,timeas ) ; //en generate alignment new y generate_alignment_asis se generan archivos para q los lea TNT
+    cat_alin = generate_alignment_shift ( 0,NUCATEG,nuspecs,WAT_CHG,timeas ) ; 
  else if ( WAT_CHG  == 2  )
         if (timeas){
          cat_alin = generate_alignment_recat (0,WAT_CHG) ;}
@@ -5069,7 +5056,7 @@ double span ;
 lims = nucats + 1  + cto ;
 span = (sps_list[especie].max_age -  sps_list[especie].min_age ) / ( lims - 1 );
 
-// cuando el cto es positivo genero un limite de mas, no problem
+
 
 
 for (j = 0 ; j < lims    ; j ++ ){
@@ -5080,11 +5067,8 @@ for (j = 0 ; j < lims    ; j ++ ){
 void define_limit_db_stretch  ( int cto,int nucats, int especie,int fin ) {
 int lims,  j   ;
 double span ;
-lims = nucats + 1  - cto + fin;  //ver si cto es neg implica mas a la derecha mientras q si fin es neg bajan el numero de cats.
+lims = nucats + 1  - cto + fin;  
 span = (sps_list[especie].max_age -  sps_list[especie].min_age ) / ( lims - 1 );
-
-// cuando el cto es positivo genero un limite de mas, no problem
-
 
 for (j = 0 ; j < lims    ; j ++ ){
    limits_str  [j] = sps_list[especie].min_age  + ( span * j ) ;
@@ -5106,9 +5090,9 @@ if (invertido == 2)
 if (invertido == 1  )
     nucats = nucats + cto ;
 if ( invertido == 0  )
-  nucats = nucats + cto ;  // cto es negativo bajan el numero de categs a llenar deberia ser
+  nucats = nucats + cto ;  
 
- //con invertido y cto negativo se deben mantener las categs.
+ 
 
 for (j = 0 ;  j <  nucats     ; j ++)
   yes_str [j] = 0   ;
@@ -5171,12 +5155,12 @@ nulan = datamatrix[0].nulands ;
 for (i = 0 ;  i < nucats  ; i ++)
   dock2[i].pt[0].x = - 10000001 ;
 
-if (invertido == 0){  // cuando no es invertido se cargan todas las categorias de stretch empezando en cero. Si es positivo el stretch se cargan todas las categs originales no las de stretch
+if (invertido == 0){  
  start = 0 ;
  if (cto < 0)
-  finish = nucats + cto ;//si cto es negativo y no es invertido bajan el numero de categs
+  finish = nucats + cto ;
  else
-  finish = nucats ;       // cargo solo las primeras las que sobran no las cargo
+  finish = nucats ;       
  for (j = start ;  j < finish  ; j ++)
  {
    for (l = 0 ; l < nulan ; l++){
@@ -5201,12 +5185,12 @@ if (invertido == 0){  // cuando no es invertido se cargan todas las categorias d
    }
   }
   else
-   if (invertido == 1 ) // si es invertido aca nucats es el numero de cats originales.
+   if (invertido == 1 ) 
    {
-     if (cto < 0 ) {  // cuando el mov es negativo achico el numero de cats del modificado y comparo con un numero reducido de la referencia. Ademas empieza al final de la trayect
+     if (cto < 0 ) {  
       cual = 0 ;   start = - cto   ; finish = nucats ;  }
      else{
-      cual = cto ; start = 0 ; finish = nucats ; //cuando es positivo compara todas las categs del referencia con las del modificado excepto las mas bajas q son las que quedas afuera
+      cual = cto ; start = 0 ; finish = nucats ;
         }
 
      for (j = start ;  j <  finish   ; j ++)
@@ -5231,7 +5215,7 @@ if (invertido == 0){  // cuando no es invertido se cargan todas las categorias d
     }
     else{
      if (invertido == 2 ){
-      if (cto < 0 ) {    // cual hace referencia a cual categoria de la modificada
+      if (cto < 0 ) {    
        cual = -cto ;   start = 0   ;}
       else{
         cual = 0 ; start = cto ;}
@@ -5239,7 +5223,7 @@ if (invertido == 0){  // cuando no es invertido se cargan todas las categorias d
            finish = nucats + chgend   ;}
        else{
           finish = nucats ;  }
-       }//cuando es positivo compara todas las categs del referencia con las del modificado excepto las mas bajas q son las que quedas afuera
+       }
        for (j = start ;  j <  finish   ; j ++)
         {
         for (l = 0 ; l < nulan ; l++){
@@ -5267,7 +5251,7 @@ double score_in_docks (int nucats, int quehago, int invertido, int chgend )
   Punktyp *  pt_cf1, * pt_cf2  ;
   int  j ,  pairs = 0 , start, finish;
   double totscore = 0 , escore = 0 ; ;
- // invertido 0 = stretch, invertido=1 str inv;invertido = 2 db stretch
+
   if (quehago >= 0)
   {
    start = 0 ;
@@ -5276,7 +5260,7 @@ double score_in_docks (int nucats, int quehago, int invertido, int chgend )
     else
       if (invertido == 0 ){
        finish = nucats ;  }
-      else // invertido == 2 ver si esto esta bien
+      else 
        {
         start = quehago ;
         if (chgend >0)
@@ -5294,15 +5278,15 @@ double score_in_docks (int nucats, int quehago, int invertido, int chgend )
         pairs++ ; }
         }
   }
-  else { // quehago < 0
+  else { 
       if (invertido == 1 ){
          start = - quehago   ; finish = nucats   ;   }
       else
         if (invertido== 0 ) {
          start = 0 ; finish = nucats + quehago ; }
-        else{ //invertido == 2  ver si esto esta bien
+        else{ 
             start = 0  ;
-         if ( chgend < 0 ) //
+         if ( chgend < 0 ) 
           finish = nucats + chgend ;
          else
           finish = nucats ; }
@@ -5332,7 +5316,7 @@ nulan = datamatrix[0].nulands ;
 for (i = 0 ;  i < nucats  ; i ++)
    dock1[i].pt[0].x = - 10000001 ;
 
-//printf("\nvalores consens as is\n");
+
 for (j= 0 ;  j < nucats  ; j ++)
   {
    for (l = 0 ; l < nulan ; l++){
@@ -5375,13 +5359,13 @@ int generate_alignment_recat ( int qreco,int which_cng) {
 int  catlin,a , i;
 double  range, ranged;
 
-  range = define_d_pairings_recat ( qreco, NUCATEG) ;  //define inf_limit y sup_lmit_cont. El mas chico de todo el alin es 0. aca redondeo too
+  range = define_d_pairings_recat ( qreco, NUCATEG) ;  
   ranged = range  ;
   catlin = (int) range ;
-  for (a =0; a < catlin + 1  ; a ++ )   // como las configs van a estar en edades alineamiento los limites son directamente los limites de las categs.
+  for (a =0; a < catlin + 1  ; a ++ )   
     limits_aln_reca [a] =    a ;
-  calculate_aln_ages (1) ;   // aca define aln ages entre 0 y la ultima categoria
-  sort_configs_aln_recat (catlin) ; // toma en cuenta lo hecho en define... y  calculate_aln_ages
+  calculate_aln_ages (1) ;   
+  sort_configs_aln_recat (catlin) ;
   alloc_alignment (catlin, nt ) ;
 
   for (i = 0 ;  i < nt ; i ++)
@@ -5391,7 +5375,7 @@ double  range, ranged;
   my_spawn_hetero ();
   input_file = fopen ("trans.tmp","rb") ;
   generate_nodtrans () ;
-  fclose (input_file) ;// lee el tmp para traducir los nodos
+  fclose (input_file) ;
   if (!read_tmp_data_recat(catlin)){
     printf("\nLa cagamos Carlos");
 
@@ -5405,16 +5389,16 @@ remove("chg_2pasos.tmp");
   if (do_classif)
     generate_species_classif_recat (catlin) ;
   if (do_covfile){
-     generate_age_covariates (catlin) ; // llama a TNT, optimiza y genera un tmp dondestas los cs optimizados
+     generate_age_covariates (catlin) ; 
      generate_covariate_recat (catlin) ;}
   return (catlin ) ;
 }
 
-int  read_tmp_data_recat(int nucag){ // cuando es recat el tmp_data lee de TNT las configs ancestrales y las en optimus matrix guarda ordenadas como en el alineamiento es decir mantiene las posic.
-                                  // cuando es shift (discreto) lo que hace es guardar todo en una matriz sin dejar espacios para los gaps.
+int  read_tmp_data_recat(int nucag){ 
+                                 
     int i, a=0 ,l,b,c, n ;
     char   buffer_tmp [10000] ;
-    input_file = fopen ("chg_2pasos.tmp","rb") ; // abre el archivo con las coordenadas ancestrales
+    input_file = fopen ("chg_2pasos.tmp","rb") ; 
     for ( n = 0 ;  n < nnods ;n ++ )
      for ( c = 0 ;  c < nucag ;c ++ )
        mask_aln [n][c] = 0 ;
@@ -5459,7 +5443,7 @@ void generate_tmp_file_hetero ()
 
  fprintf(output_file,"\nlog chg_2pasos.tmp ;\nlm show;\nwarn-;\nsil-all;\n lm ;\n sil=;log/;\n quit ; ");
 fclose(output_file);
-}  // warn-;
+}  
 
 
 void generate_aln_file(int cats,int which_cng ){
@@ -5486,7 +5470,7 @@ else
      {
       if (j != 0)
        fprintf(output_file,"|");
-      if ( (align_matrix [i][j].pt[0].x) == -10000001  || ( (!timeas) &&  ( which_cng == 2) ) )  // si tiempo discreto y hay stretchs entonces no ponga ningun land.
+      if ( (align_matrix [i][j].pt[0].x) == -10000001  || ( (!timeas) &&  ( which_cng == 2) ) ) 
       {
        for ( l= 0 ; l < datamatrix[0].nulands ; l ++)
         fprintf(output_file,"? ") ;
@@ -5514,7 +5498,7 @@ pt_sank = sank_mtx ;
 
 for ( n = intnods  ;  n -- ; ){
        nodo = optlist [n] ;
-       if (nodo == nt){   // esto esta mal xq pueden ser mas o menos cuando es recat!!! verrrrr
+       if (nodo == nt){  
          inf_limit_cont[ nodo ] = 0 ;
          sup_limit_cont[ nodo ] = nucas   ;}
        for (d = firs[nodo] ; d != - 9  ; d = sis [ d  ] ){
@@ -5530,7 +5514,7 @@ for ( n = intnods  ;  n -- ; ){
              shift=  pt_sank[std_anc][std_nod].best_shft ;
              shift = translator_sh [shift] ;
              shifti = (double) shift ;
-             uncat = (sup_limit_cont[ nodo ] - inf_limit_cont [ nodo ]) / nucas ; // esto es lo qeu corrije que un cambio de una categ en una tray acortada no es lo mismo q en una cat original
+             uncat = (sup_limit_cont[ nodo ] - inf_limit_cont [ nodo ]) / nucas ; 
              shifti = shift * uncat ;
              inf_limit_cont [ d ] = inf_limit_cont [nodo] + shifti ;
              sup_limit_cont [ d ] = sup_limit_cont [nodo] + shifti ;}
@@ -5757,7 +5741,7 @@ for (  i = 0 ;   i < nusp ; i ++ )
      for (j = 0 ;  j < pt_sp[i].num_confs  ; j ++)
         {
           cual = pt_sp[ i ].conflist [ j ] ;
-          if (  pt_conf[cual].age_aln == inf_limit_cont[i] ){ // si es la mas baja es el unico caso que la incluye en la categoria sino el limite pasa a la siguiente.
+          if (  pt_conf[cual].age_aln == inf_limit_cont[i] ){ 
                for (k = 0 ;  k < cats  ; k ++)
                 {
                    if (pt_conf[cual].age_aln == limits_aln_reca[k]){
@@ -5798,7 +5782,7 @@ svg_file= fopen(nombre, "w");
      if ( namelen > maxnamelen )
          maxnamelen = namelen ;}
 
-if (maxnamelen < 5  )   // para q entren los nodos internos
+if (maxnamelen < 5  )   
      maxnamelen  = 5 ;
  starlin = (maxnamelen  * 20 )  ;
  finlin = 1300 ; 
@@ -5813,7 +5797,7 @@ if (maxnamelen < 5  )   // para q entren los nodos internos
      fx = ((pt_sp[s].max_aln_age / catl) * total ) + starlin ;
      fprintf(svg_file,"\n<text x= \"0\" y=\"%i\" fill=\"black\"  font-size=\"30\" alignment-baseline=\"middle\"  font-style = \"italic\"   > %s   </text>",dde,pt_sp[s].sps_name );
      fprintf(svg_file,"\n<line x1 = \"%i\" y1 = \"%i\" x2 = \"%i\" y2 = \"%i\" stroke = \"blue\" stroke-width = \"20\"/>",sx,dde,fx,dde);
-     dde = dde + 45 ;   } //60 ->50
+     dde = dde + 45 ;   } 
   for (s= nuspecs ; s < nnods ; s ++){
      if (iscont){
         sx = ((inf_limit_cont[s] / catl) * total ) + starlin ;
@@ -5829,7 +5813,7 @@ if (maxnamelen < 5  )   // para q entren los nodos internos
         fx = ((supdo / catl) * total ) + starlin ;
      fprintf(svg_file,"\n<text x= \"0\" y=\"%i\" fill=\"black\"  font-size=\"30\" alignment-baseline=\"middle\" > Node %i   </text>",dde,nod_p2t[s] );
      fprintf(svg_file,"\n<line x1 = \"%i\" y1 = \"%i\" x2 = \"%i\" y2 = \"%i\" stroke = \"blue\" stroke-width = \"20\"/>",sx,dde,fx,dde);
-     dde = dde + 45 ; } //60 ->50
+     dde = dde + 45 ; } 
        }
 x = starlin ;
 sy = 20 ;
@@ -5852,7 +5836,6 @@ int procargs ( int nargs , char ** arg )
     char * cp ;
     int  case_d=0,  case_c =0, case_t = 0, case_i = 0 ;
     char age [5] ;
-    //Globals:
     doskfile= 0; doasisfiles= 0; do_classif= 0 ; do_covfile=0 ; do_resample = 0 ;  maxstages= 0;pen_fac = 1 ; pen_ext = 1 ,outusrname ;
     dosvg = 1 ;  dospeclist = 0 ; do_deca= 0 ;
     if ( nargs == 1 ) {
@@ -6139,7 +6122,7 @@ while (1){
   sank_uppass () ;
   newscore= fill_reconstructions_new (nt) ;
   cto = vta * pace ;
-  map_support (0,cto) ; // aca tengo que ver como envio la info. Tengo qeu decidir q info guardo*/
+  map_support (0,cto) ; 
     falta = 0 ;
    for (n=0 ; n < nnods ; n++) {
      if (n == nt )
@@ -6220,7 +6203,7 @@ int my_spawn_tree_svg( )
     strcat (name,"_tree.svg");
     fprintf(output_file,"ttag &%s bheight 40 ; zz ;",name);
     fclose (output_file);
-    strcpy(qqqstr,"tnt ") ; //tiene que ir el nombre del archivo y el del script separado por ;
+    strcpy(qqqstr,"tnt ") ; 
     strcat (qqqstr,finalFilename) ;
     strcat (qqqstr," ") ;
     strcat (qqqstr,fintreFilename) ;
@@ -6270,6 +6253,3 @@ for (  i = 0 ;   i < nuspecs ; i ++ )
 fclose (output_file);
 }
  
-      
-
-          
